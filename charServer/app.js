@@ -4,12 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const productRoutes = require('./api/routes/products');
-const orderRoutes = require('./api/routes/orders');
-const userRoutes = require('./api/routes/users');
-
-
-mongoose.connect('mongodb+srv://node-rest-shop:Nimcol!8@node-rest-shop-ptqjr.mongodb.net/test?retryWrites=true', 
+mongoose.connect('mongodb+srv://ChatAdmin:' + process.env.MONGO_ATLAS_PW + '@chatit-l5llm.mongodb.net/test?retryWrites=true', 
 {
     useNewUrlParser: true
 });
@@ -30,10 +25,6 @@ app.use((req, res, next) => {
     }
     next();
 })
-
-app.use('/products', productRoutes);
-app.use('/orders', orderRoutes);
-app.use('/users', userRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
