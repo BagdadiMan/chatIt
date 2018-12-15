@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const userRoutes = require('./api/routes/users');
 const messageRoutes = require('./api/routes/messages');
+const conversationRoutes = require('./api/routes/conversation');
 
 mongoose.connect('mongodb+srv://ChatAdmin:' + process.env.MONGO_ATLAS_PW + '@chatit-l5llm.mongodb.net/test?retryWrites=true', 
 {
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 
 app.use('/users', userRoutes);
 app.use('/messages', messageRoutes);
+app.use('/conversations', conversationRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
