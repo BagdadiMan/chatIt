@@ -34,5 +34,6 @@ const userController = require('../controllers/users');
 router.post('/signup', upload.single('profileImage'), userController.signUp);
 router.post('/login', userController.login);
 router.get('/:username', checkAuth, userController.getUser);
+router.post('/contact', checkAuth, userController.addContact);
 
 module.exports = router;

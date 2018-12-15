@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
 const User = require('../models/user');
+const Conversation = require('../models/conversation');
 
 exports.signUp = (req, res, next) => {
     User.find({
@@ -103,4 +104,25 @@ exports.getUser = (req, res, next) => {
                 error: err
             });
         })
+}
+
+exports.addContact = (req, res, next ) => {
+    const conversation = new Conversation({
+        _id: mongoose.Types.ObjectId(),
+        name: req.body.name,
+        members: req.body.members
+    });
+    conversation.save()
+        .then(result => {
+            console.log(conversation);
+            res.status(201).json({
+                message: 'Conversation created'
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
 }
