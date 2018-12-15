@@ -25,3 +25,32 @@ exports.sendMessage = (req, res, next) => {
             });
         });
 }
+
+exports.getByConversation = (req, res, next) => {
+    Message.find()
+        .where('conversationId').equals(req.params.conversationId)
+        .sort({
+            sentHour: 'desc'
+        })
+        .skip(req.body.messageOffset)
+        .limit(100)
+        .exec()
+        .then(docs => {
+            const messages = docs.map(doc => {
+                return {
+                    _id: doc._id,
+                    conversationId: doc.conversationId,
+                    author: doc.author,
+                    body: doc.body,
+                    sentHout: doc.sentHour
+                }
+            });
+            res.status(200).json(messages);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+}
