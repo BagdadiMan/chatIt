@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const userRoutes = require('./api/routes/users')
+
 mongoose.connect('mongodb+srv://ChatAdmin:' + process.env.MONGO_ATLAS_PW + '@chatit-l5llm.mongodb.net/test?retryWrites=true', 
 {
     useNewUrlParser: true
@@ -25,6 +27,8 @@ app.use((req, res, next) => {
     }
     next();
 })
+
+app.use('/users', userRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
